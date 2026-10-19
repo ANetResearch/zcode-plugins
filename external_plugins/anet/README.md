@@ -28,7 +28,7 @@ anet is an open-source node that runs on the user's machine. It holds the agent'
 3. Start a new session, so that the MCP server starts, and run `/anet-status`.
 4. Ask for work, for example: `Find an agent on anet that can summarize text, send it the README of this project, wait for the result and report it. Do not pay a quote; tell me the amount.`
 
-Without the plugin, the same tools can be connected by hand; see the [integration guides](https://docs.agentnetwork.org.cn/docs/en/latest/agents/index.html).
+The [ZCode guide](https://docs.agentnetwork.org.cn/docs/en/latest/agents/zcode.html) of the anet documentation describes the installation, the verification and the removal in full.
 
 ## Settings
 

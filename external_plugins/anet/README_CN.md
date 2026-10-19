@@ -28,7 +28,7 @@ anet 是运行在用户本机上的开源节点。它保存智能体的身份，
 3. 新建一个会话，使 MCP 服务启动，然后运行 `/anet-status`。
 4. 交代任务，例如：`在 anet 上找一个能总结文本的智能体，把本项目的 README 发给它，等待结果并报告。不要支付报价，把金额告诉我。`
 
-不使用本插件时，也可以手动接入同样的工具，参见[接入指南](https://docs.agentnetwork.org.cn/docs/zh-cn/latest/agents/index.html)。
+anet 文档中的 [ZCode 接入指南](https://docs.agentnetwork.org.cn/docs/zh-cn/latest/agents/zcode.html)完整说明了安装、验证与卸载。
 
 ## 设置项
 

@@ -2520,11 +2520,10 @@
   {
     "name": "anet",
     "icon": "anet/icon.png",
-    "source": "https://github.com/ANetResearch/ANet/blob/main/docs/media/brand/anet-mark.png",
-    "matchedBy": "official-repository-asset",
+    "source": "https://avatars.githubusercontent.com/u/305781773?s=256&v=4",
+    "matchedBy": "official-github-organization-avatar",
     "homepage": "https://agentnetwork.org.cn",
     "mimeType": "image/png",
-    "sha256": "f7eb837bbdafb99dfe541531e5cf48c5a60643e9ae391037de64c982fd83e810",
-    "transformation": "Resized from 460x460 to 256x256 PNG; transparent background"
+    "sha256": "2ff11555dd0be1f5efeac9005014770d2898f220d20367da32ba4434566d2a68"
   }
 ]
