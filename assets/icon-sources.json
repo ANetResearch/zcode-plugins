@@ -2516,5 +2516,15 @@
     "sha256": "9d7f32e5bf2e0bf1f1b1967268534090c611fd308659a0360c1c729b35553d7d",
     "mimeType": "image/png",
     "transformation": "Solid background, 512x512 PNG; no baked corner radius"
+  },
+  {
+    "name": "anet",
+    "icon": "anet/icon.png",
+    "source": "https://github.com/ANetResearch/ANet/blob/main/docs/media/brand/anet-mark.png",
+    "matchedBy": "official-repository-asset",
+    "homepage": "https://agentnetwork.org.cn",
+    "mimeType": "image/png",
+    "sha256": "f7eb837bbdafb99dfe541531e5cf48c5a60643e9ae391037de64c982fd83e810",
+    "transformation": "Resized from 460x460 to 256x256 PNG; transparent background"
   }
 ]
