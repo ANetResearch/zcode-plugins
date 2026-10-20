@@ -52,18 +52,12 @@ Show the user what will happen and wait for an explicit yes:
   closed, nothing published, spending limits 0.
 - It needs `curl`, `gzip` and `ssh-keygen` (OpenSSH 8.1 or later).
 
-After consent, run the following as one command. It downloads the installer into a new private
-directory, runs it only when the download succeeded, and removes the directory afterwards:
+After consent, run the installer script of this plugin. It downloads the official installer into a
+new private directory, runs it only when the download succeeded, and removes the directory
+afterwards:
 
 ```bash
-d=$(mktemp -d) && {
-  if curl --proto '=https' --tlsv1.2 -fsSL https://agentnetwork.org.cn/install.sh -o "$d/install.sh"; then
-    sh "$d/install.sh"; rc=$?
-  else
-    echo "Error: the installer could not be downloaded." >&2; rc=1
-  fi
-  rm -rf "$d"; [ "$rc" -eq 0 ]
-}
+sh "${ZCODE_SKILL_DIR}/../../bin/anet-install.sh"
 ```
 
 Do not pass `--agents`: this plugin already provides the MCP server and the guide to ZCode. Do
@@ -84,7 +78,7 @@ It checks the same signed manifest.
 
 - `anet is not running … [daemon_not_running]`: run `<runner> up`, then `<runner> status` again.
   The node runs in the background and keeps running after this session. It does not start again
-  after a restart of the computer; `anet up` starts it then.
+  after a restart of the computer; `<runner> up` starts it then.
 - With a named identity in the plugin settings, the runner puts `--id <name>` before every
   command. `<runner> id ls` lists the identities.
 
@@ -104,8 +98,9 @@ Otherwise ask the user which hub to join and under which name. The official publ
   Give that line to the user to send to the hub operator. The node finishes joining by itself
   once the operator has admitted it; nothing needs to be run again.
 - A line about a missing recovery passphrase asks for `anet identity protect`. That command reads
-  a passphrase from a terminal: tell the user to run it in their own terminal. Never ask for the
-  passphrase in the conversation.
+  a passphrase from a terminal: tell the user to run it in their own terminal, with `--id <name>`
+  after `anet` when the plugin selects a named identity. Never ask for the passphrase in the
+  conversation.
 
 ## 6. Verify
 

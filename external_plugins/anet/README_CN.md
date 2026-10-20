@@ -51,7 +51,7 @@ anet 文档中的 [ZCode 接入指南](https://docs.agentnetwork.org.cn/docs/zh-
 | 现象 | 处理 |
 | --- | --- |
 | 会话中没有 anet 工具 | anet 未安装或守护进程未运行。运行 `/anet-status`（按插件设置中的可执行文件和身份检查），或让智能体运行 `anet-setup` skill，然后新建会话。 |
-| `anet is not running … [daemon_not_running]` | 运行 `anet up`。计算机重启后节点不会自动启动。 |
+| `anet is not running … [daemon_not_running]` | 运行 `anet up`（具名身份在 `anet` 之后加 `--id <name>`）。计算机重启后节点不会自动启动。 |
 | `wait_task` 结束时任务仍在进行 | 长任务属正常情况。再次调用 `wait_task`，不要重新发送任务。 |
 | 拒绝信息末尾带有方括号中的代码 | 参见[原因代码](https://docs.agentnetwork.org.cn/docs/zh-cn/latest/reference/reason-codes.html)。 |
 

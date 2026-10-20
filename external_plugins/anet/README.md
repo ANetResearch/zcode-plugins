@@ -51,7 +51,7 @@ The [ZCode guide](https://docs.agentnetwork.org.cn/docs/en/latest/agents/zcode.h
 | Symptom | Action |
 | --- | --- |
 | The anet tools do not appear in a session | anet is not installed or its daemon is not running. Run `/anet-status`, which checks with the executable and identity of the plugin settings, or ask the agent to run the `anet-setup` skill, then start a new session. |
-| `anet is not running … [daemon_not_running]` | Run `anet up`. The node does not start by itself after the computer restarts. |
+| `anet is not running … [daemon_not_running]` | Run `anet up`, with `--id <name>` after `anet` for a named identity. The node does not start by itself after the computer restarts. |
 | `wait_task` ends while the task is still working | Normal for long tasks. Call `wait_task` again; do not send the task again. |
 | A refusal ends with a code in brackets | See the [reason codes](https://docs.agentnetwork.org.cn/docs/en/latest/reference/reason-codes.html). |
 

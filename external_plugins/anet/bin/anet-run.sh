@@ -36,17 +36,32 @@ found = [v for k, v in sorted(options.items()) if k.startswith("anet@") and isin
 entry = found[0] if len(found) == 1 else {}
 for key in ("anetPath", "identity"):
     value = entry.get(key, "")
-    print(value if isinstance(value, str) else "")
+    # One line per setting: a value with a line break is not a valid path or name.
+    print(value if isinstance(value, str) and "\n" not in value and "\r" not in value else "")
 PY
     return 0
   fi
   if command -v plutil >/dev/null 2>&1; then
+    # Same rule as above: an entry of exactly one marketplace is read, and only string values count.
+    found=
+    count=0
     for market in zcode-plugins-official agentnetwork; do
       if plutil -extract "plugins.options.anet@$market" json -o /dev/null "$zcode_config" >/dev/null 2>&1; then
-        plutil -extract "plugins.options.anet@$market.anetPath" raw -o - "$zcode_config" 2>/dev/null || echo
-        plutil -extract "plugins.options.anet@$market.identity" raw -o - "$zcode_config" 2>/dev/null || echo
-        return 0
+        found=$market
+        count=$((count + 1))
       fi
+    done
+    for key in anetPath identity; do
+      value=
+      if [ "$count" -eq 1 ] && [ "$(plutil -type "plugins.options.anet@$found.$key" "$zcode_config" 2>/dev/null)" = string ]; then
+        value=$(plutil -extract "plugins.options.anet@$found.$key" raw -o - "$zcode_config" 2>/dev/null) || value=
+      fi
+      # A value with a line break is not a valid path or name.
+      case $value in
+        *"
+"*|*"$(printf '\r')"*) value= ;;
+      esac
+      printf '%s\n' "$value"
     done
   fi
   return 0
@@ -63,6 +78,15 @@ fi
 
 find_anet() {
   if [ -n "$anet_path" ]; then
+    # A relative path would be resolved against the working directory of the session,
+    # which can be an untrusted workspace; only an absolute path is accepted.
+    case $anet_path in
+      /*) ;;
+      *)
+        printf 'The plugin setting anetPath names %s, which is not an absolute path. Correct or clear the setting.\n' "$anet_path" >&2
+        return 1
+        ;;
+    esac
     if [ -f "$anet_path" ] && [ -x "$anet_path" ]; then
       printf '%s\n' "$anet_path"
       return 0
@@ -70,8 +94,9 @@ find_anet() {
     printf 'The plugin setting anetPath names %s, which is not an executable file. Correct or clear the setting.\n' "$anet_path" >&2
     return 1
   fi
-  if command -v anet >/dev/null 2>&1; then
-    command -v anet
+  found=$(command -v anet 2>/dev/null) || found=
+  if [ -n "$found" ] && [ -f "$found" ] && [ -x "$found" ]; then
+    printf '%s\n' "$found"
     return 0
   fi
   for dir in "${HOME:-}/.local/bin" /usr/local/bin /opt/homebrew/bin; do
@@ -95,7 +120,13 @@ if [ "${1:-}" = --resolve ]; then
     printf 'executable: not found\n'
   fi
   printf 'identity: %s\n' "${identity:-default}"
-  printf 'runner: sh %s\n' "$0"
+  # The path is quoted when it holds a character that the shell would split or expand
+  # (for example a space in "Application Support"), because the agent runs this line.
+  case $0 in
+    *[!A-Za-z0-9_./:@%+=,-]*) runner_path="'$(printf '%s' "$0" | sed "s/'/'\\\\''/g")'" ;;
+    *) runner_path=$0 ;;
+  esac
+  printf 'runner: sh %s\n' "$runner_path"
   exit 0
 fi
 
